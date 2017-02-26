@@ -1,7 +1,7 @@
 package  controllers
 
 import (
-    _ "fmt"
+     "fmt"
      "encoding/json"
 
     "github.com/astaxie/beego"
@@ -10,6 +10,12 @@ import (
 
 type TopicsController struct {
     beego.Controller
+}
+
+func getTopic() [] models.TopicData {
+    var data = [] models.TopicData {{1, "Item1"}, {2, "Item2"}}
+
+    return data
 }
 
 func (this *TopicsController) Post() {
@@ -23,10 +29,12 @@ func (this *TopicsController) Post() {
         this.ServeJSON()
     }
 
+    fmt.Println(request)
+    data := getTopic()
     this.Data["json"] = models.Respond {
         ResultCode:	0,
 	Message:	"Success",
-        Data:		[] string{ "Crimson" , "Red" , "Ruby" , "Maroon" },
+        Data:		data,
     }
     this.ServeJSON()
 }

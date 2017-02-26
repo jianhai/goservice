@@ -6,6 +6,11 @@ type Respond struct {
     Data	interface{}  `json:"data"`
 }
 
+type TopicData struct {
+    TopicId  int64 `json:"topicId"`
+    Title string `json:"title"`
+}
+
 func RespondError(error int64) Respond {
     resp :=  Respond {
         ResultCode  : error,
