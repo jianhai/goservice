@@ -14,12 +14,13 @@ type TopicsController struct {
 func (this *TopicsController) Post() {
     var request map[string] interface{}
 
-    fmt.Println("Good Luck")
-    fmt.Println(this.Ctx.Request) 
+    fmt.Println(this.Ctx.Input.RequestBody)
+    fmt.Println(this.Ctx.Input)
 
-    if err := json.Unmarshal(this.Ctx.Input.RequestBody, &request); err != nil {
-        fmt.Println("Bad")
-    }
+    json.Unmarshal(this.Ctx.Input.RequestBody, &request)
+    //if err := json.Unmarshal(this.Ctx.Input.RequestBody, &request); err != nil {
+    //    fmt.Println("Bad")
+    //}
 
     this.Data["resultCode"] = 0
     this.Data["message"] = "Success"
