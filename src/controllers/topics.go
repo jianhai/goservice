@@ -5,6 +5,7 @@ import (
      "encoding/json"
 
     "github.com/astaxie/beego"
+    "../models"
 )
 
 type TopicsController struct {
@@ -15,15 +16,18 @@ func (this *TopicsController) Post() {
     var request map[string] interface{}
 
     fmt.Println(this.Ctx.Input.RequestBody)
-    fmt.Println(this.Ctx.Input)
 
-    json.Unmarshal(this.Ctx.Input.RequestBody, &request)
-    //if err := json.Unmarshal(this.Ctx.Input.RequestBody, &request); err != nil {
-    //    fmt.Println("Bad")
-    //}
+    if err := json.Unmarshal(this.Ctx.Input.RequestBody, &request); err != nil {
+        fmt.Println("Bad")
+    }
 
-    this.Data["resultCode"] = 0
-    this.Data["message"] = "Success"
-    this.Data["data"] = ""
+    resp := models.Resp {
+        ResultCode:	0,
+	Message:	"Success",
+        Data:		[] string{ "Crimson" , "Red" , "Ruby" , "Maroon" },
+    }
+
+    json,_ :=json.Marshal(&resp)
+    this.Data["json"]=json
     this.ServeJSON()
 }
