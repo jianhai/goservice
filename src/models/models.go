@@ -22,8 +22,8 @@ type Topic struct {
 /*
  */
 type User struct {
-    UserId  int64  `json:userId`
-    Sex  int64  `json:sex`
+    UserId  int64  `json:"userId"`
+    Sex  int64  `json:"sex"`
     NickName  string  `json:"nickName"`
     HeadURL  string  `json:"headURL"`
     Birthday  string  `json:"birthday"`

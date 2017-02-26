@@ -29,8 +29,24 @@ func (this *RegisterController) Post() {
         }
         this.ServeJSON()
     }
-    fmt.Println(request)
 
+    if request["email"] == nil {
+        this.Data["json"] = models.Respond {
+            ResultCode:	1,
+	    Message:	"Email is NULL",
+        }
+        this.ServeJSON()
+    }
+
+    if request["password"] == nil {
+        this.Data["json"] = models.Respond {
+            ResultCode:	1,
+	    Message:	"Password is NULL",
+        }
+        this.ServeJSON()
+    }
+
+    fmt.Println(request["client"])
     data := registerUser()
     this.Data["json"] = models.Respond {
         ResultCode:	0,

@@ -12,8 +12,8 @@ type TopicsController struct {
     beego.Controller
 }
 
-func getTopic() [] models.TopicData {
-    var data = [] models.TopicData {{1, "Item1"}, {2, "Item2"}}
+func getTopic() [] models.Topic {
+    var data = [] models.Topic {{1, "Item1"}, {2, "Item2"}}
 
     return data
 }
