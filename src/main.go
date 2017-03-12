@@ -17,13 +17,12 @@ func main() {
     o.Using("default")
 
     // 
-    beego.Router("/api/user/login", &controllers.LoginController{})
     beego.Router("/api/user/register", &controllers.RegisterController{})
+    beego.Router("/api/user/signin", &controllers.LoginController{})
+    beego.Router("/api/user/modify", &controllers.ModifyController{})
     beego.Router("/api/user/info", &controllers.InfoController{})
 
     beego.Router("/api/live/topics", &controllers.TopicsController{})
-
-    //controllers.Test()
 
     beego.Run()
 }

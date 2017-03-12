@@ -12,20 +12,16 @@ type RegisterController struct {
     beego.Controller
 }
 
-func Test() models.User {
-   user := models.User {
-   }
+func registerUser(email string, password string) models.User {
+    user := models.User { EMail: email, Password:password, }
 
-   models.AddUser(&user)
-   return user
-}
+    id, _ := models.AddUser(&user)
+    if id == 0 {
+        return user
+    }
 
-func registerUser(email interface{}, password interface{}) models.User {
-   user := models.User {
-   }
-
-   models.AddUser(&user)
-   return user
+    user = models.GetUserById(id)
+    return user
 }
 
 func (this *RegisterController) Post() {
@@ -57,8 +53,18 @@ func (this *RegisterController) Post() {
         this.ServeJSON()
     }
 
+
     fmt.Println(request["client"])
-    data := registerUser(email, password)
+    user := models.GetUserByEmail(fmt.Sprintf("%s", email))
+    if user.Id != 0 {
+        this.Data["json"] = models.Respond {
+            ResultCode:	1,
+	    Message:	"EMail have exist",
+        }
+        this.ServeJSON()
+    }
+
+    data := registerUser(fmt.Sprintf("%s", email), fmt.Sprintf("%s", password))
     this.Data["json"] = models.Respond {
         ResultCode:	0,
 	Message:	"Success",

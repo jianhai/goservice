@@ -2,23 +2,24 @@ package models
 
 import (
     "log"
+    "fmt"
     "errors"
 
     "github.com/astaxie/beego/orm"
     "github.com/astaxie/beego/validation"
-    . "../lib"
+    _ "../lib"
 )
 
 /*
  */
 type User struct {
     Id  int64  `orm:"column(userID)" json:"userId"`
-    EMail string `orm:"column(email)" json:"email"`
-    Password string `orm:"column(password)" json:"password"`
-    NickName  string  `orm:"column(nickName)" json:"nickName"`
-    HeadURL  string  `orm:"column(headURL)" json:"headURL"`
-    Sex  int64  `orm:"column(sex)" json:"sex"`
-    Birthday  string  `orm:"column(birthday)" json:"birthday"`
+    EMail string `orm:"column(email)" json:"_"`
+    Password string `orm:"column(password)" json:"_"`
+    NickName  string  `orm:"column(nickName)" form:"nickName" json:"nickName"`
+    HeadURL  string  `orm:"column(headURL)" form:"headURL" json:"headURL"`
+    Sex  int  `orm:"column(sex)" form:"sex" json:"sex"`
+    Birthday  float64  `orm:"column(birthday)" json:"birthday"`
     IsOnline  int64  `orm:"column(isOnline)" json:"isOnline"`
     Longitude  int64  `orm:"column(longitude)" json:"longitude"`
     Latitude   int64  `orm:"column(latitude)" json:"latitude"`
@@ -27,7 +28,7 @@ type User struct {
     LivingDuration  int64  `orm:"column(livingDuration)" json:"livingDuration"`
     Golden  int64  `orm:"column(golden)" json:"golden"`
     Gifts  int64  `orm:"column(gifts)" json:"gifts"`
-    WantSex  int  `orm:"column(wantSex)" json:"wantSex"`
+    WantSex  int  `orm:"column(wantSex)" form:"wantSex" json:"wantSex"`
     Topic   int  `orm:"column(topicID)" json:"topic"`
 }
 
@@ -59,7 +60,7 @@ func AddUser(u *User) (int64, error) {
     o := orm.NewOrm()
     user := new(User)
     user.EMail  = u.EMail
-    user.Password = Strtomd5(u.Password)
+    user.Password = u.Password
     id, err := o.Insert(user)
     return  id, err
 }
@@ -71,5 +72,45 @@ func DelUserById(Id int64) (int64, error) {
 }
 
 func UpdateUser(u *User) (int64, error) {
-    return 0, nil
+    if err:= checkUser(u); err != nil {
+        return 0, err
+    }
+
+    o := orm.NewOrm()
+    user := make(orm.Params)
+    if len(u.NickName) > 0 {
+        user["nickName"] = u.NickName
+    }
+    var table User
+    num, err := o.QueryTable(table).Filter("Id", u.Id).Update(user)
+    return num, err
+}
+
+func GetUserByEmail(email string) (user User) {
+    user = User{EMail: email}
+    o := orm.NewOrm()
+    o.Read(&user, "email")
+    return user
+}
+
+func GetUserByEmailandPassword(email string, password string) (user User) {
+    user = User{EMail: email, Password: password}
+    o := orm.NewOrm()
+    err := o.Read(&user, "email", "password")
+    if err == orm.ErrNoRows {
+        fmt.Println("No result found.")
+    } else if err == orm.ErrMissPK {
+        fmt.Println("No primary key found.")
+    } else {
+        fmt.Println(user.Id, user.EMail, user.Password)
+    }
+
+    return user
+}
+
+func GetUserById(id int64) (user User) {
+    user = User{Id: id}
+    o := orm.NewOrm()
+    o.Read(&user, "Id")
+    return user
 }
