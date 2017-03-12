@@ -1,5 +1,13 @@
 #!/bin/bash
 
-LOCALE=$(dirname $(readlink -f "$0"))
+# Get Current Real Path
+basepath=`pwd`
 
-export GOPATH="$LOCALE/3rd/golang/"
+# Setting GOPATH
+export GOPATH="$basepath/3rd/golang/"
+
+# Get GoLang Package
+while read line; do
+    echo " Goang Package" $line
+    go get $line
+done < $basepath/3rd/golang/README

@@ -19,25 +19,6 @@ type Topic struct {
     Title string `json:"title"`
 }
 
-/*
- */
-type User struct {
-    UserId  int64  `json:"userId"`
-    Sex  int64  `json:"sex"`
-    NickName  string  `json:"nickName"`
-    HeadURL  string  `json:"headURL"`
-    Birthday  string  `json:"birthday"`
-    IsOnline  int64  `json:"isOnline"`
-    Longitude  int64  `json:"longitude"`
-    Latitude   int64  `json:"latitude"`
-    LivingId   string  `json:"livingId"`
-    LivingState  int64  `json:"livingState"`
-    LivingDuration  int64  `json:"livingDuration"`
-    Golden  int64  `json:"golden"`
-    Gifts  int64  `json:"gifts"`
-    WantSex  int  `json:"wantSex"`
-    Topic   int  `json:"topic"`
-}
 
 /*
  */
