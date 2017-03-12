@@ -6,43 +6,79 @@ import (
 
     "github.com/astaxie/beego"
     "github.com/astaxie/beego/orm"
-    "../models"
+    m "../models"
 )
 
 type ModifyController struct {
     beego.Controller
 }
 
+type requestModel struct {
+    Client m.Client `json:"client"`
+    Sex int `json:"sex"`
+    NickName string `json:"nickName"`
+    WantSex int `json:"wantSex"`
+    HeadURL string `json:"headURL"`
+    Birthday float64 `json:"birthday"`
+    Topic int `json:"topic"`
+};
+
 func (this *ModifyController) Post() {
-    var request map[string] interface{}
+    var request requestModel
 
     if err := json.Unmarshal(this.Ctx.Input.RequestBody, &request); err != nil {
-        this.Data["json"] = models.Respond {
+        this.Data["json"] = m.Respond {
             ResultCode:	1,
 	    Message:	"Request is NULL",
         }
         this.ServeJSON()
     }
 
-    fmt.Println(request)
-    client := request["client"].(map[string] interface{})
-    fmt.Println(client)
-    c, _ := models.GetClient(client);
-    fmt.Println(c.Latitude)
     o := orm.NewOrm()
-    user := models.User{Id: 10000}
-    if o.Read(&user) == nil {
-        user.NickName = request["nickName"].(string)
-        user.HeadURL = request["headURL"].(string)
-        user.Sex = 1
-        user.WantSex=2
-        user.Birthday = request["birthday"].(float64)
-        if num, err := o.Update(&user, "nickName", "headURL", "sex", "wantSex", "isOnline"); err == nil {
-            fmt.Println(num)
-        }
+    user := m.User{Id: request.Client.UserId}
+    o.Read(&user)
+
+    if request.Sex != 0 {
+        user.Sex = request.Sex
     }
 
-    this.Data["json"] = models.Respond {
+    if len(request.NickName) > 0 {
+        user.NickName = request.NickName
+    }
+
+    if request.WantSex != 0 {
+        user.WantSex = request.WantSex
+    }
+
+    if len(request.HeadURL) > 0 {
+        user.HeadURL = request.HeadURL
+    }
+
+    if request.Birthday != 0 {
+        user.Birthday = request.Birthday
+    }
+
+    if request.Birthday != 0 {
+        user.Birthday = request.Birthday
+    }
+
+    if request.Client.Longitude != 0 {
+        user.Longitude = request.Client.Longitude
+    }
+
+    if request.Client.Latitude != 0 {
+        user.Latitude = request.Client.Latitude
+    }
+
+    if request.Topic != 0 {
+        user.Topic = request.Topic
+    }
+
+    if num, err := o.Update(&user); err != nil {
+        fmt.Println("%d:%s", num, err)
+    }
+
+    this.Data["json"] = m.Respond {
         ResultCode:	0,
 	Message:	"Success",
         Data:		user,

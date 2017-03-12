@@ -21,8 +21,8 @@ type User struct {
     Sex  int  `orm:"column(sex)" form:"sex" json:"sex"`
     Birthday  float64  `orm:"column(birthday)" json:"birthday"`
     IsOnline  int64  `orm:"column(isOnline)" json:"isOnline"`
-    Longitude  int64  `orm:"column(longitude)" json:"longitude"`
-    Latitude   int64  `orm:"column(latitude)" json:"latitude"`
+    Longitude  float64  `orm:"column(longitude)" json:"longitude"`
+    Latitude   float64  `orm:"column(latitude)" json:"latitude"`
     LivingId   string  `orm:"column(livingId)" json:"livingId"`
     LivingState  int64  `orm:"column(livingState)" json:"livingState"`
     LivingDuration  int64  `orm:"column(livingDuration)" json:"livingDuration"`

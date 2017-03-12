@@ -1,5 +1,5 @@
 DROP DATABASE IF EXISTS goserver;
-CREATE DATABASE goserver;
+CREATE DATABASE goserver DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE goserver;
 
 CREATE TABLE `t_User` ( \
@@ -21,4 +21,4 @@ CREATE TABLE `t_User` ( \
     `wantSex` int, \
     `topicID` int, \
     PRIMARY KEY (`userId`)
-) AUTO_INCREMENT = 10000;
+) AUTO_INCREMENT=10000;
