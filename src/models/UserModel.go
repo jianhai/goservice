@@ -62,7 +62,8 @@ func AddUser(u *User) (int64, error) {
     user.EMail  = u.EMail
     user.Password = u.Password
     id, err := o.Insert(user)
-    return  id, err
+
+    return id, err
 }
 
 func DelUserById(Id int64) (int64, error) {

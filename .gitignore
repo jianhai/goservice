@@ -1,5 +1,6 @@
 goserver
 
 3rd/golang/
-test/UserLogin
+test/UserRegister
+test/UserSignin
 test/UserModify

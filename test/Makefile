@@ -3,11 +3,14 @@
 default: build
 
 build:
-	@go build -o UserLogin UserLogin.go
+	@go build -o UserRegister UserRegister.go
+	@go build -o UserSignin UserSignin.go
 	@go build -o UserModify UserModify.go
 
 clean:
-	@rm -rf UserLogin	
+	@rm -rf UserRegister
+	@rm -rf UserSignin
+	@rm -rf UserModify
 
 test: build
 	@./runtest.sh

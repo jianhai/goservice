@@ -1,71 +1,64 @@
 package controllers
 
 import (
-    "fmt"
     "encoding/json"
 
     "github.com/astaxie/beego"
-    "../models"
+    m "../models"
 )
 
 type RegisterController struct {
     beego.Controller
 }
 
-func registerUser(email string, password string) models.User {
-    user := models.User { EMail: email, Password:password, }
+type requestRegister struct {
+    Client m.Client `json:"client"`
+    Email string `json:"email"`
+    Password string `json:"password"`
+};
 
-    id, _ := models.AddUser(&user)
-    if id == 0 {
-        return user
+func registerUser(email string, password string) (m.User, error){
+    user := m.User { EMail: email, Password:password, }
+
+    id, err := m.AddUser(&user)
+    if err != nil {
+        return m.User{}, err
     }
 
-    user = models.GetUserById(id)
-    return user
+    user = m.GetUserById(id)
+    return user, nil
 }
 
 func (this *RegisterController) Post() {
-    var request map[string] interface{}
+    var request requestRegister
 
     if err := json.Unmarshal(this.Ctx.Input.RequestBody, &request); err != nil {
-        this.Data["json"] = models.Respond {
+        this.Data["json"] = m.Respond {
             ResultCode:	1,
 	    Message:	"Request is NULL",
         }
         this.ServeJSON()
     }
 
-    var email = request["email"]
-    if email == nil {
-        this.Data["json"] = models.Respond {
-            ResultCode:	1,
-	    Message:	"Email is NULL",
-        }
-        this.ServeJSON()
-    }
-
-    var password = request["password"]
-    if password == nil {
-        this.Data["json"] = models.Respond {
-            ResultCode:	1,
-	    Message:	"Password is NULL",
-        }
-        this.ServeJSON()
-    }
-
-
-    fmt.Println(request["client"])
-    user := models.GetUserByEmail(fmt.Sprintf("%s", email))
+    user := m.GetUserByEmail(request.Email)
     if user.Id != 0 {
-        this.Data["json"] = models.Respond {
+        this.Data["json"] = m.Respond {
             ResultCode:	1,
 	    Message:	"EMail have exist",
         }
         this.ServeJSON()
     }
 
-    data := registerUser(fmt.Sprintf("%s", email), fmt.Sprintf("%s", password))
-    this.Data["json"] = models.Respond {
+    data, err := registerUser(request.Email, request.Password)
+    if err != nil {
+        this.Data["json"] = m.Respond {
+            ResultCode:	1,
+	    Message:	"Register Error",
+        }
+        this.ServeJSON()
+    }
+
+    this.Data["json"] = m.Respond {
         ResultCode:	0,
 	Message:	"Success",
         Data:		data,

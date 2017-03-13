@@ -2,6 +2,7 @@ package main
 
 import (
     "fmt"
+    "flag"
     "encoding/json"
     m "../src/models"
     "./lib"
@@ -17,9 +18,15 @@ type UserModify struct {
     Topic int `json:"topic"`
 };
 
+var (
+    id = flag.Int64("id", 10000, "User ID")
+)
+
 func main() {
+    flag.Parse()
+
     object := UserModify{}
-    object.Client.UserId = 10000
+    object.Client.UserId = *id
     object.Client.Longitude = 116.300680217574
     object.Client.Latitude = 39.98267552027887
     object.NickName="栾建海"

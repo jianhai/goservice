@@ -18,7 +18,7 @@ func main() {
 
     // 
     beego.Router("/api/user/register", &controllers.RegisterController{})
-    beego.Router("/api/user/signin", &controllers.LoginController{})
+    beego.Router("/api/user/signin", &controllers.SigninController{})
     beego.Router("/api/user/modify", &controllers.ModifyController{})
     beego.Router("/api/user/info", &controllers.InfoController{})
 

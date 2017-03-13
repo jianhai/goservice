@@ -13,7 +13,7 @@ type ModifyController struct {
     beego.Controller
 }
 
-type requestModel struct {
+type requestModify struct {
     Client m.Client `json:"client"`
     Sex int `json:"sex"`
     NickName string `json:"nickName"`
@@ -24,7 +24,7 @@ type requestModel struct {
 };
 
 func (this *ModifyController) Post() {
-    var request requestModel
+    var request requestModify
 
     if err := json.Unmarshal(this.Ctx.Input.RequestBody, &request); err != nil {
         this.Data["json"] = m.Respond {
