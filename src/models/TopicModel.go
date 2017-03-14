@@ -1,6 +1,25 @@
 package models
 
+import (
+    "github.com/astaxie/beego/orm"
+)
+
 type Topic struct {
-    TopicId  int64 `json:"topicId"`
-    Title string `json:"title"`
+    Id  int64 `orm:"column(Id)" json:"topicId"`
+    Title string `orm:"colum(title)" json:"title"`
+}
+
+func (topic *Topic) TableName() string {
+     return "t_Topic"
+}
+
+func init() {
+    orm.RegisterModel(new(Topic))
+}
+
+func GetAllTopic() []Topic {
+    var topics []Topic
+    orm.NewOrm().Raw("select * from t_Topic").QueryRows(&topics)
+
+    return topics
 }

@@ -4,7 +4,8 @@ import (
     _ "github.com/go-sql-driver/mysql"
     "github.com/astaxie/beego"
     "github.com/astaxie/beego/orm"
-    "./controllers"
+    "./controllers/live"
+    "./controllers/user"
 )
 
 func init() {
@@ -17,12 +18,12 @@ func main() {
     o.Using("default")
 
     // 
-    beego.Router("/api/user/register", &controllers.RegisterController{})
-    beego.Router("/api/user/signin", &controllers.SigninController{})
-    beego.Router("/api/user/modify", &controllers.ModifyController{})
-    beego.Router("/api/user/info", &controllers.InfoController{})
+    beego.Router("/api/user/register", &UserController.RegisterController{})
+    beego.Router("/api/user/signin", &UserController.SigninController{})
+    beego.Router("/api/user/modify", &UserController.ModifyController{})
+    beego.Router("/api/user/info", &UserController.InfoController{})
 
-    beego.Router("/api/live/topics", &controllers.TopicsController{})
+    beego.Router("/api/live/topics", &LiveController.TopicsController{})
 
     beego.Run()
 }

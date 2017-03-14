@@ -1,10 +1,10 @@
-package controllers
+package UserController
 
 import (
     "encoding/json"
 
     "github.com/astaxie/beego"
-    m "../models"
+    m "../../models"
 )
 
 type SigninController struct {

@@ -2,6 +2,12 @@ DROP DATABASE IF EXISTS goserver;
 CREATE DATABASE goserver DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE goserver;
 
+CREATE TABLE `t_Topic` ( \
+    `Id` int unsigned NOT NULL AUTO_INCREMENT, \
+    `title` varchar(255) NOT NULL, \
+    PRIMARY KEY (`Id`)
+);
+
 CREATE TABLE `t_User` ( \
     `userId` int unsigned NOT NULL AUTO_INCREMENT, \
     `email` varchar(255) NOT NULL, \

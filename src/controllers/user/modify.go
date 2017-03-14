@@ -1,4 +1,4 @@
-package controllers
+package UserController
 
 import (
     "fmt"
@@ -6,7 +6,7 @@ import (
 
     "github.com/astaxie/beego"
     "github.com/astaxie/beego/orm"
-    m "../models"
+    m "../../models"
 )
 
 type ModifyController struct {
