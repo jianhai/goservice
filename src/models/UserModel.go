@@ -13,23 +13,23 @@ import (
 /*
  */
 type User struct {
-    Id  int64  `orm:"column(userID)" json:"userId"`
+    Id  int64  `orm:"column(userId)" form:"userID" json:"userId"`
     EMail string `orm:"column(email)" json:"_"`
     Password string `orm:"column(password)" json:"_"`
-    NickName  string  `orm:"column(nickName)" form:"nickName" json:"nickName,omitempty"`
-    HeadURL  string  `orm:"column(headURL)" form:"headURL" json:"headURL,omitempty"`
-    Sex  int  `orm:"column(sex)" form:"sex" json:"sex,omitempty"`
-    Birthday  float64  `orm:"column(birthday)" json:"birthday,omitempty"`
-    IsOnline  int64  `orm:"column(isOnline)" json:"isOnline,omitempty"`
-    Longitude  float64  `orm:"column(longitude)" json:"longitude,omitempty"`
-    Latitude   float64  `orm:"column(latitude)" json:"latitude,omitempty"`
-    LivingId   string  `orm:"column(livingId)" json:"livingId,omitempty"`
-    LivingState  int64  `orm:"column(livingState)" json:"livingState,omitempty"`
-    LivingDuration  int64  `orm:"column(livingDuration)" json:"livingDuration,omitempty"`
-    Golden  int64  `orm:"column(golden)" json:"golden,omitempty"`
-    Gifts  int64  `orm:"column(gifts)" json:"gifts,omitempty"`
-    WantSex  int  `orm:"column(wantSex)" form:"wantSex" json:"wantSex,omitempty"`
-    Topic   int  `orm:"column(topicID)" json:"topic,omitempty"`
+    NickName  string  `orm:"column(nickName)" form:"nickName" json:"nickName"`
+    HeadURL  string  `orm:"column(headURL)" form:"headURL" json:"headURL"`
+    Sex  int  `orm:"column(sex)" form:"sex" json:"sex"`
+    Birthday  float64  `orm:"column(birthday)" json:"birthday"`
+    IsOnline  int64  `orm:"column(isOnline)" json:"isOnline"`
+    Longitude  float64  `orm:"column(longitude)" json:"longitude"`
+    Latitude   float64  `orm:"column(latitude)" json:"latitude"`
+    LivingId   string  `orm:"column(livingId)" json:"livingId"`
+    LivingState  int64  `orm:"column(livingState)" json:"livingState"`
+    LivingDuration  int64  `orm:"column(livingDuration)" json:"livingDuration"`
+    Golden  int64  `orm:"column(golden)" json:"golden"`
+    Gifts  int64  `orm:"column(gifts)" json:"gifts"`
+    WantSex  int  `orm:"column(wantSex)" form:"wantSex" json:"wantSex"`
+    Topic   int  `orm:"column(topicID)" json:"topic"`
 }
 
 func (user *User) TableName() string {
@@ -61,6 +61,8 @@ func AddUser(u *User) (int64, error) {
     user := new(User)
     user.EMail  = u.EMail
     user.Password = u.Password
+    /* below commit is only placeholder */
+    user.LivingId = "fOKVFiseW"
     id, err := o.Insert(user)
 
     return id, err
@@ -114,4 +116,11 @@ func GetUserById(id int64) (user User) {
     o := orm.NewOrm()
     o.Read(&user, "Id")
     return user
+}
+
+func GetAllUser() []User {
+    var users []User
+    orm.NewOrm().Raw("select * from t_User").QueryRows(&users)
+
+    return users
 }

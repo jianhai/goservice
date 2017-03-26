@@ -25,6 +25,7 @@ func main() {
 
     beego.Router("/api/live/topics", &LiveController.TopicsController{})
     beego.Router("/api/live/givings", &LiveController.GivingController{})
+    beego.Router("/api/live/livings", &LiveController.LivingsController{})
 
     beego.Run()
 }

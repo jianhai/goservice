@@ -20,6 +20,7 @@ type requestModify struct {
     WantSex int `json:"wantSex"`
     HeadURL string `json:"headURL"`
     Birthday float64 `json:"birthday"`
+    IsOnline int64  `json:"isOnline"`
     Topic int `json:"topic"`
 };
 
@@ -72,6 +73,10 @@ func (this *ModifyController) Post() {
 
     if request.Topic != 0 {
         user.Topic = request.Topic
+    }
+
+    if request.IsOnline !=0 {
+        user.IsOnline = request.IsOnline
     }
 
     if num, err := o.Update(&user); err != nil {

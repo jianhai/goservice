@@ -16,7 +16,7 @@ CREATE TABLE `t_User` ( \
     `headURL` varchar(255), \
     `birthday` DOUBLE, \
     `sex` int NOT NULL DEFAULT 0, \
-    `isOnline` int, \
+    `isOnline` int NOT NULL DEFAULT -1, \
     `longitude` double, \
     `latitude` double, \
     `livingId` varchar(255), \
