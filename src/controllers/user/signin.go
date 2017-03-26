@@ -40,7 +40,7 @@ func (this *SigninController) Post() {
     this.Data["json"] = m.Respond {
         ResultCode:	0,
 	Message:	"Success",
-        Data:		user,
+        Data:		m.GetRespUser(user),
     }
     this.ServeJSON()
 }

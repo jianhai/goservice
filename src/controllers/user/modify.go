@@ -1,7 +1,6 @@
 package UserController
 
 import (
-    "fmt"
     "encoding/json"
 
     "github.com/astaxie/beego"
@@ -21,7 +20,7 @@ type requestModify struct {
     HeadURL string `json:"headURL"`
     Birthday float64 `json:"birthday"`
     IsOnline int64  `json:"isOnline"`
-    Topic int `json:"topic"`
+    Topic int64 `json:"topicId"`
 };
 
 func (this *ModifyController) Post() {
@@ -86,7 +85,7 @@ func (this *ModifyController) Post() {
     this.Data["json"] = m.Respond {
         ResultCode:	0,
 	Message:	"Success",
-        Data:		user,
+        Data:		m.GetRespUser(user),
     }
     this.ServeJSON()
 }

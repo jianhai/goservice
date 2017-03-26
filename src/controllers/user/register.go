@@ -61,7 +61,7 @@ func (this *RegisterController) Post() {
     this.Data["json"] = m.Respond {
         ResultCode:	0,
 	Message:	"Success",
-        Data:		data,
+        Data:		m.GetRespUser(data),
     }
     this.ServeJSON()
 }

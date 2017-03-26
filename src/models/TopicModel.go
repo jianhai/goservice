@@ -23,3 +23,11 @@ func GetAllTopic() []Topic {
 
     return topics
 }
+
+func GetTopicById(id int64) Topic {
+   topic  := Topic {Id: id}
+   o := orm.NewOrm()
+   o.Read(&topic, "Id")
+
+   return topic
+}

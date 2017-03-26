@@ -29,7 +29,12 @@ type User struct {
     Golden  int64  `orm:"column(golden)" json:"golden"`
     Gifts  int64  `orm:"column(gifts)" json:"gifts"`
     WantSex  int  `orm:"column(wantSex)" form:"wantSex" json:"wantSex"`
-    Topic   int  `orm:"column(topicID)" json:"topic"`
+    Topic   int64  `orm:"column(topicID)" json:"_"`
+}
+
+type RespUser struct {
+    User
+    Topics Topic `json:"topic"`
 }
 
 func (user *User) TableName() string {
@@ -123,4 +128,9 @@ func GetAllUser() []User {
     orm.NewOrm().Raw("select * from t_User").QueryRows(&users)
 
     return users
+}
+
+func GetRespUser(user User) RespUser {
+    ruser := RespUser{user, GetTopicById(user.Topic)}
+    return ruser;
 }
