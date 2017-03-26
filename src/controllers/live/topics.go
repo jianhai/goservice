@@ -11,7 +11,7 @@ type TopicsController struct {
     beego.Controller
 }
 
-func getTopic() [] m.Topic {
+func getTopic() []m.Topic {
     data := m.GetAllTopic()
 
     return data
