@@ -3,6 +3,7 @@ goserver
 3rd/golang/
 
 test/LiveTopics
+test/LiveGivings
 test/UserRegister
 test/UserSignin
 test/UserModify

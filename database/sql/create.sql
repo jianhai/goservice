@@ -28,3 +28,14 @@ CREATE TABLE `t_User` ( \
     `topicID` int, \
     PRIMARY KEY (`userId`)
 ) AUTO_INCREMENT=10000;
+
+CREATE TABLE `t_Giving` ( \
+   `Id`      INT UNSIGNED NOT NULL AUTO_INCREMENT, \
+   `type`    VARCHAR(255) DEFAULT "FACE", \
+   `sex`     INT, \
+   `title`   VARCHAR(255), \
+   `imageURL`VARCHAR(255), \
+   `gifURL`  VARCHAR(255), \
+   `price`   INT, \
+   PRIMARY KEY (`Id`)
+); 

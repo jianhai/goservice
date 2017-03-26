@@ -1,11 +1,34 @@
 package models
 
+import (
+    "github.com/astaxie/beego/orm"
+    _ "github.com/astaxie/beego/validation"
+    _ "../lib"
+)
+
+/*
+ */
 type Giving struct {
-    GiveId  int64  `json:"giveId"`
-    Type  int64  `json:"type"`
-    Sex  int64  `json:"sex"`
-    Title  string  `json:"title"`
-    ImageURL  string  `json:"imageURL"`
-    GifURL  string  `json:"gifURL"`
-    Price  int `json:"price"`
+    Id  int64  `orm:"column(Id)" json:"giveId"`
+    Type string `orm:"column(type)" json:"type,omitempty"`
+    Sex int `orm:"column(sex)" json:"sex,omitempty"`
+    Title  string  `orm:"column(title)" json:"title,omitempty"`
+    ImageURL  string  `orm:"column(imageURL)" json:"imageURL,omitempty"`
+    GifURL  string  `orm:"column(gifURL)" json:"giftURL,omitempty"`
+    Price  float64  `orm:"column(price)" json:"price,omitempty"`
+}
+
+func (giving *Giving) TableName() string {
+	return "t_Giving"
+}
+
+func init() {
+    orm.RegisterModel(new(Giving))
+}
+
+func GetAllGiving() []Giving {
+    var givings []Giving
+    orm.NewOrm().Raw("select * from t_Giving").QueryRows(&givings)
+
+    return givings
 }
