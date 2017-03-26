@@ -1,6 +1,7 @@
 package UserController
 
 import (
+    "fmt"
     "encoding/json"
 
     "github.com/astaxie/beego"
